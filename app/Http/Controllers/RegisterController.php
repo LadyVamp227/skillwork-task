@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use App\Services\RegisterService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -16,17 +15,9 @@ class RegisterController extends Controller
         $this->registerService = $registerService;
     }
 
-    public function register(Request $request) : JsonResponse
+    public function register(RegisterRequest $request) : JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email|max:255|unique:users',
-            'name' => 'required|string|max:255',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all()], 422);
-        }
-        return response()->json($this->registerService->create($request->toArray()));
+        $collection = $request->safe()->collect();
+        return response()->json($this->registerService->create($collection));
     }
 }
