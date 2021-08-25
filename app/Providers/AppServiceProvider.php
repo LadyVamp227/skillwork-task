@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\ArticlesController;
+use App\Interfaces\ArticlesServiceAdapter;
+use App\Services\ArticlesService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->when(ArticlesController::class)
+            ->needs(ArticlesServiceAdapter::class)
+            ->give(ArticlesService::class);
     }
 
     /**

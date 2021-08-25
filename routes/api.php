@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,4 +16,10 @@ Route::prefix('v1')->group(function () {
     Route::post('/register', 'App\Http\Controllers\RegisterController@register');
 
     Route::get('email/verify/{id}', 'App\Http\Controllers\VerificationController@verify')->name('verification.verify');
+
+    Route::post('/login', 'App\Http\Controllers\AuthenticationController@login');
+
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::get('/logout', 'App\Http\Controllers\AuthenticationController@logout');
+    });
 });
