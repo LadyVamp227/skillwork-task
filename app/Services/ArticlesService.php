@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Http\Resources\ArticleCollection;
+use App\Http\Resources\ArticleResource;
 use App\Interfaces\ArticlesServiceAdapter;
 use App\Models\Article;
 use Illuminate\Contracts\Pagination\CursorPaginator;
@@ -13,14 +15,14 @@ use Illuminate\Support\Facades\Auth;
 final class ArticlesService implements ArticlesServiceAdapter
 {
 
-    public function create(Collection $data) : string
+    public function create(Collection $data) : ArticleResource
     {
         $article = new Article;
         $article->title = $data['title'];
         $article->content = $data['content'];
         $article->user()->associate(Auth::id());
         $article->save();
-        return "okey";
+        return new ArticleResource($article);
     }
 
     public function show() : CursorPaginator
@@ -33,8 +35,8 @@ final class ArticlesService implements ArticlesServiceAdapter
         )->orderBy('articles.id')->cursorPaginate(5);
     }
 
-    public function byId(int $id) : Article
+    public function byId(int $id) : ArticleResource
     {
-        return Article::findOrFail($id);
+        return new ArticleResource(Article::findOrFail($id));
     }
 }

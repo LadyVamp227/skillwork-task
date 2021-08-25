@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::prefix('v1')->group(function () {
-    Route::post('/register', 'App\Http\Controllers\RegisterController@register');
+    Route::post('/register', 'App\Http\Controllers\RegisterController@register')->name('register');
 
     Route::get('email/verify/{id}', 'App\Http\Controllers\VerificationController@verify')->name('verification.verify');
 
@@ -23,7 +23,7 @@ Route::prefix('v1')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/logout', 'App\Http\Controllers\AuthenticationController@logout');
 
-        Route::resource('article', ArticlesController::class, [
+        Route::apiResource('article', ArticlesController::class, [
             'only' => [
                 'index',
                 'store',

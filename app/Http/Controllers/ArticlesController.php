@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ArticlesRequest;
 use App\Interfaces\ArticlesServiceAdapter;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class ArticlesController extends Controller
 {
