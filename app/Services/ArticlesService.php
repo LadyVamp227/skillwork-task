@@ -7,12 +7,13 @@ namespace App\Services;
 use App\Interfaces\ArticlesServiceAdapter;
 use App\Models\Article;
 use Illuminate\Contracts\Pagination\CursorPaginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 final class ArticlesService implements ArticlesServiceAdapter
 {
 
-    public function create(array $data) : string
+    public function create(Collection $data) : string
     {
         $article = new Article;
         $article->title = $data['title'];

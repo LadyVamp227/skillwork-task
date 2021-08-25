@@ -6,10 +6,11 @@ namespace App\Interfaces;
 
 use App\Models\Article;
 use Illuminate\Contracts\Pagination\CursorPaginator;
+use Illuminate\Support\Collection;
 
 interface ArticlesServiceAdapter
 {
-    public function create(array $data) : string;
+    public function create(Collection $data) : string;
 
     public function show() : CursorPaginator;
 

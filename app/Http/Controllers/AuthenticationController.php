@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AuthenticationRequest;
 use App\Services\AuthenticationService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class AuthenticationController extends Controller
 {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArticlesRequest;
 use App\Interfaces\ArticlesServiceAdapter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -30,20 +31,14 @@ class ArticlesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param ArticlesRequest $request
      * @return JsonResponse
      */
-    public function store(Request $request) : JsonResponse
+    public function store(ArticlesRequest $request) : JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'title'   => 'required|string|max:255',
-            'content' => 'required|string|max:255',
-        ]);
+        $collection = $request->safe()->collect();
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all()], 422);
-        }
-        return response()->json($this->adapter->create($request->toArray()));
+        return response()->json($this->adapter->create($collection));
     }
 
     /**
