@@ -16,9 +16,9 @@ final class AuthenticationService
      */
     public function login($data) : array
     {
-        $user = User::where('email', $data->email)->first();
+        $user = User::where('email', $data['email'])->first();
 
-        if (!$user || !Hash::check($data->password, $user->password)) {
+        if (!$user || !Hash::check($data['password'], $user->password)) {
             return ['response' => 'Invalid email or password', 'status' => 422];
         }
         $token = $user->createToken('authToken')->plainTextToken;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthenticationRequest;
 use App\Services\AuthenticationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,19 +17,12 @@ class AuthenticationController extends Controller
         $this->authenticationService = $authenticationService;
     }
 
-    public function login(Request $request) : JsonResponse
+    public function login(AuthenticationRequest $request) : JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'email'    => 'required|string|email|max:255',
-            'password' => 'required|string|min:8',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all()], 422);
-        }
+        $collection = $request->safe()->collect();
         return response()->json(
-            $this->authenticationService->login($request)['response'],
-            $this->authenticationService->login($request)['status']
+            $this->authenticationService->login($collection)['response'],
+            $this->authenticationService->login($collection)['status']
         );
     }
 
