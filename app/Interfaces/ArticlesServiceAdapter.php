@@ -6,7 +6,6 @@ namespace App\Interfaces;
 
 use App\Models\Article;
 use Illuminate\Contracts\Pagination\CursorPaginator;
-use Illuminate\Database\Eloquent\Collection;
 
 interface ArticlesServiceAdapter
 {

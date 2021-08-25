@@ -7,7 +7,6 @@ namespace App\Services;
 use App\Interfaces\ArticlesServiceAdapter;
 use App\Models\Article;
 use Illuminate\Contracts\Pagination\CursorPaginator;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
 final class ArticlesService implements ArticlesServiceAdapter
@@ -35,6 +34,6 @@ final class ArticlesService implements ArticlesServiceAdapter
 
     public function byId(int $id) : Article
     {
-       return Article::findOrFail($id);
+        return Article::findOrFail($id);
     }
 }

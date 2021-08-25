@@ -48,7 +48,6 @@ class Handler extends ExceptionHandler
 
     public function handleException(\Throwable $exception) : JsonResponse
     {
-
         if ($exception instanceof MethodNotAllowedHttpException) {
             return response()->json('Sorry, method not allowed!', 405);
         }
@@ -65,15 +64,12 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof QueryException) {
-
             return response()->json('Sorry, the query has error', 500);
         }
         if ($exception instanceof AuthenticationException) {
-
             return response()->json('You are not authenticated! Login !', 401);
         }
         return response()->json($exception, 500);
-
     }
 
     /**
