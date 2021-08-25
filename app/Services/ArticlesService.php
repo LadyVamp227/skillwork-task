@@ -33,8 +33,8 @@ final class ArticlesService implements ArticlesServiceAdapter
         )->orderBy('articles.id')->cursorPaginate(5);
     }
 
-    public function byId(int $id) : Collection
+    public function byId(int $id) : Article
     {
-        return Article::where('id', $id)->get();
+       return Article::findOrFail($id);
     }
 }
