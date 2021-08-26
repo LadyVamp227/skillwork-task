@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\ArticlesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +13,24 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::prefix('v1')->group(function () {
+    Route::post('/register', 'App\Http\Controllers\RegisterController@register')->name('register');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::get('email/verify/{id}', 'App\Http\Controllers\VerificationController@verify')->name('verification.verify');
+
+    Route::post('/login', 'App\Http\Controllers\AuthenticationController@login');
+
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::get('/logout', 'App\Http\Controllers\AuthenticationController@logout');
+
+        Route::apiResource('article', ArticlesController::class, [
+            'only' => [
+                'index',
+                'store',
+                'show',
+            ],
+        ])->parameters([
+                           'article' => 'id',
+                       ]);
+    });
 });
