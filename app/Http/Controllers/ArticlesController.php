@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ArticlesRequest;
+use App\Http\Resources\ArticleResource;
 use App\Interfaces\ArticlesServiceAdapter;
 use Illuminate\Http\JsonResponse;
 
@@ -30,23 +31,23 @@ class ArticlesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param ArticlesRequest $request
-     * @return JsonResponse
+     * @return ArticleResource
      */
-    public function store(ArticlesRequest $request) : JsonResponse
+    public function store(ArticlesRequest $request) : ArticleResource
     {
         $collection = $request->safe()->collect();
 
-        return response()->json($this->adapter->create($collection));
+        return $this->adapter->create($collection);
     }
 
     /**
      * Display the specified resource.
      *
      * @param int $id
-     * @return JsonResponse
+     * @return ArticleResource
      */
-    public function show(int $id) : JsonResponse
+    public function show(int $id) : ArticleResource
     {
-        return response()->json($this->adapter->byId($id));
+        return $this->adapter->byId($id);
     }
 }
